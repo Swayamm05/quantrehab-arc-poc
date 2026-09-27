@@ -8,7 +8,7 @@ export const CONFIG = {
   // The wallet that should RECEIVE the 5 USDC payment.
   // This is a public address (like a bank account number) — safe to expose.
   // Replace this with your Wallet B address (the one you already tested with).
-  PROVIDER_WALLET_ADDRESS: "0xPUT_YOUR_PROVIDER_WALLET_ADDRESS_HERE",
+  PROVIDER_WALLET_ADDRESS: "0x9204bF9d48aeD503Ce7f360aCAc707d4780B8C26",
 
   PROVIDER_NAME: "QuantRehab Test Provider",
   SERVICE_NAME: "Initial MSK Physiotherapy Consultation",
