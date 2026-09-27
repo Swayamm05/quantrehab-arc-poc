@@ -113,7 +113,9 @@ async function connectWallet() {
 
 // Make sure the wallet is switched to Arc Testnet, adding it if needed.
 async function ensureArcNetwork() {
-  const currentChainIdHex = await window.ethereum.request({ method: "eth_chainId" });
+  const currentChainIdHex = String(
+  await window.ethereum.request({ method: "eth_chainId" })
+);
 
   if (currentChainIdHex.toLowerCase() === CONFIG.CHAIN_ID_HEX.toLowerCase()) {
     return;
