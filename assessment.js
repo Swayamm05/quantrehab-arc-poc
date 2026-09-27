@@ -1,11 +1,44 @@
 // ============================================================
 // QuantRehab — Assessment page logic
-// Gated behind a successful payment (checked via sessionStorage
-// set by app.js on the payment page). No backend in this PoC —
-// the "submitted" data is only shown back to the user, not stored.
+// Gated behind a REAL, on-chain verified payment.
+//
+// The payment page links here as assessment.html?tx=0x...
+// We fetch that transaction's receipt directly from Arc Testnet
+// and confirm it was a successful USDC transfer of at least the
+// consultation price to the configured provider wallet. This is
+// far more reliable on mobile than trusting sessionStorage, which
+// can be lost on cache clears, tab switches, or wallet-app
+// redirects. sessionStorage is still used as a same-tab shortcut
+// so re-visiting the page doesn't re-check the chain every time.
 // ============================================================
 
+import {
+  createPublicClient,
+  http,
+  decodeEventLog,
+  parseUnits,
+} from "https://esm.sh/viem@2.21.0";
+
+import { CONFIG } from "./config.js";
+
+const publicClient = createPublicClient({
+  transport: http(CONFIG.RPC_URL),
+});
+
+const TRANSFER_EVENT_ABI = [
+  {
+    type: "event",
+    name: "Transfer",
+    inputs: [
+      { indexed: true, name: "from", type: "address" },
+      { indexed: true, name: "to", type: "address" },
+      { indexed: false, name: "value", type: "uint256" },
+    ],
+  },
+];
+
 const views = {
+  checking: document.getElementById("checkingView"),
   locked: document.getElementById("lockedView"),
   redFlag: document.getElementById("redFlagView"),
   done: document.getElementById("doneView"),
@@ -17,14 +50,71 @@ function showOnly(view) {
   view.classList.remove("hidden");
 }
 
-// --- Gate: must have a verified payment in this browser tab/session ---
-const paid = sessionStorage.getItem("quantrehab_payment_verified") === "true";
+// Checks a transaction hash directly against Arc Testnet: it must have
+// succeeded and include a USDC Transfer of at least the price to the
+// provider wallet.
+async function verifyTxOnChain(txHash) {
+  const receipt = await publicClient.getTransactionReceipt({ hash: txHash });
 
-if (!paid) {
-  showOnly(views.locked);
-} else {
-  showOnly(views.form);
+  if (!receipt || receipt.status !== "success") {
+    return false;
+  }
+
+  const requiredAmount = parseUnits(String(CONFIG.PRICE_USDC), CONFIG.USDC_DECIMALS);
+
+  for (const log of receipt.logs) {
+    try {
+      const decoded = decodeEventLog({
+        abi: TRANSFER_EVENT_ABI,
+        data: log.data,
+        topics: log.topics,
+      });
+      if (
+        decoded.eventName === "Transfer" &&
+        decoded.args.to.toLowerCase() === CONFIG.PROVIDER_WALLET_ADDRESS.toLowerCase() &&
+        decoded.args.value >= requiredAmount
+      ) {
+        return true;
+      }
+    } catch {
+      // Not a Transfer log we can decode — skip it.
+    }
+  }
+
+  return false;
 }
+
+async function checkAccess() {
+  const params = new URLSearchParams(window.location.search);
+  const txHash = params.get("tx");
+
+  // Fast path: already verified this session, no need to hit the chain again.
+  if (!txHash && sessionStorage.getItem("quantrehab_payment_verified") === "true") {
+    return true;
+  }
+
+  if (!txHash) {
+    return false;
+  }
+
+  try {
+    const ok = await verifyTxOnChain(txHash);
+    if (ok) {
+      sessionStorage.setItem("quantrehab_payment_verified", "true");
+      sessionStorage.setItem("quantrehab_payment_tx", txHash);
+    }
+    return ok;
+  } catch (err) {
+    console.error("Payment verification failed:", err);
+    return false;
+  }
+}
+
+(async () => {
+  showOnly(views.checking);
+  const allowed = await checkAccess();
+  showOnly(allowed ? views.form : views.locked);
+})();
 
 views.form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -73,3 +163,4 @@ views.form.addEventListener("submit", (e) => {
 
   showOnly(views.done);
 });
+    
