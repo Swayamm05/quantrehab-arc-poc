@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuantRehab — Assessment</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card wide">
+
+    <!-- Shown if someone reaches this page without paying -->
+    <div id="lockedView" class="hidden">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">Assessment Locked</div>
+      <p class="muted">This assessment is only available after your consultation payment is confirmed.</p>
+      <a href="index.html"><button type="button">Back to Payment</button></a>
+    </div>
+
+    <!-- Red-flag stop screen -->
+    <div id="redFlagView" class="hidden">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">Please See a Healthcare Professional</div>
+      <p class="muted">
+        One or more of your answers are things that should be checked by a qualified
+        healthcare professional promptly, rather than continued with this self-assessment.
+        This is a safety precaution, not a diagnosis.
+      </p>
+      <a href="index.html"><button type="button" class="secondary">Back to Start</button></a>
+    </div>
+
+    <!-- Confirmation screen after submit -->
+    <div id="doneView" class="hidden">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">Assessment Recorded</div>
+      <p class="muted">
+        Your structured intake has been recorded for this session. QuantRehab's
+        reasoning engine is not connected in this prototype — in the full product,
+        a physiotherapist and the QRCS reasoning layer would review this evidence next.
+        This is clinical decision support context, not a diagnosis.
+      </p>
+      <div class="summary" id="summaryBox"></div>
+    </div>
+
+    <!-- The actual form -->
+    <form id="assessmentForm" class="hidden">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">MSK Assessment</div>
+      <p class="muted">Answer as accurately as you can — every question helps narrow down what's going on.</p>
+
+      <div class="section-title">Safety Screen</div>
+      <label class="checkbox"><input type="checkbox" name="flag_trauma" /> Sudden severe pain after a fall, collision, or accident</label>
+      <label class="checkbox"><input type="checkbox" name="flag_night" /> Pain that wakes you at night or doesn't ease with rest</label>
+      <label class="checkbox"><input type="checkbox" name="flag_neuro" /> Numbness, tingling, or weakness that is spreading</label>
+      <label class="checkbox"><input type="checkbox" name="flag_systemic" /> Unexplained fever, chills, or weight loss alongside the pain</label>
+      <label class="checkbox"><input type="checkbox" name="flag_saddle" /> Loss of bladder/bowel control, or numbness in the groin/inner-thigh area</label>
+
+      <div class="section-title">Symptom Details</div>
+      <label>Body region
+        <select name="bodyRegion" required>
+          <option value="">Select...</option>
+          <option>Knee</option>
+          <option>Ankle / Foot</option>
+          <option>Hip</option>
+          <option>Lower back</option>
+          <option>Shoulder</option>
+          <option>Elbow / Wrist</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Onset
+        <select name="onset" required>
+          <option value="">Select...</option>
+          <option>Sudden</option>
+          <option>Gradual</option>
+        </select>
+      </label>
+      <label>Current pain level (0 = none, 10 = worst)
+        <input type="range" name="painLevel" min="0" max="10" value="3" oninput="this.nextElementSibling.textContent=this.value" />
+        <output>3</output>
+      </label>
+      <label>What makes it worse?
+        <textarea name="aggravating" rows="2" placeholder="e.g. running downhill, stairs, after long sitting"></textarea>
+      </label>
+      <label>What makes it better?
+        <textarea name="relieving" rows="2" placeholder="e.g. rest, ice, stretching"></textarea>
+      </label>
+
+      <div class="section-title">Sport &amp; Training Load</div>
+      <label>Primary sport / activity
+        <select name="sport" required>
+          <option value="">Select...</option>
+          <option>Running</option>
+          <option>Badminton</option>
+          <option>Football</option>
+          <option>Cricket</option>
+          <option>Basketball</option>
+          <option>Gym training</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Training frequency (sessions/week)
+        <input type="number" name="frequency" min="0" max="14" />
+      </label>
+      <label>Recent change in training load
+        <select name="loadChange">
+          <option value="">Select...</option>
+          <option>Increased recently</option>
+          <option>Decreased recently</option>
+          <option>No real change</option>
+        </select>
+      </label>
+      <label>Anything changed in your technique/form recently? (optional)
+        <textarea name="technique" rows="2"></textarea>
+      </label>
+
+      <div class="section-title">Recovery &amp; History</div>
+      <label>Average sleep (hours/night)
+        <input type="number" name="sleep" min="0" max="14" step="0.5" />
+      </label>
+      <label>Recovery quality
+        <select name="recovery">
+          <option value="">Select...</option>
+          <option>Poor</option>
+          <option>Fair</option>
+          <option>Good</option>
+        </select>
+      </label>
+      <label>Relevant previous injury? (optional)
+        <textarea name="previousInjury" rows="2" placeholder="Area and roughly when"></textarea>
+      </label>
+      <label>Anything you notice during movement (squatting, hopping, balancing)? (optional)
+        <textarea name="selfTestNotes" rows="2"></textarea>
+      </label>
+
+      <button type="submit">Submit Assessment</button>
+    </form>
+
+  </div>
+
+  <script type="module" src="assessment.js"></script>
+</body>
+</html>
