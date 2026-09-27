@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuantRehab — Payment</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <div class="brand">QUANTREHAB</div>
+    <div class="title">Physiotherapy Consultation</div>
+
+    <div class="row">
+      <span class="label">Provider</span>
+      <span class="value" id="providerName">—</span>
+    </div>
+    <div class="row">
+      <span class="label">Service</span>
+      <span class="value" id="serviceName">—</span>
+    </div>
+    <div class="row">
+      <span class="label">Price</span>
+      <span class="value" id="priceValue">—</span>
+    </div>
+    <div class="row">
+      <span class="label">Network</span>
+      <span class="value" id="networkValue">—</span>
+    </div>
+
+    <div id="walletSection" class="hidden">
+      <div class="row">
+        <span class="label">Wallet</span>
+        <span class="value" id="walletAddress">—</span>
+      </div>
+      <div class="row">
+        <span class="label">USDC Balance</span>
+        <span class="value" id="walletBalance">—</span>
+      </div>
+    </div>
+
+    <button id="connectBtn">Connect Wallet</button>
+    <button id="payBtn" class="hidden">Pay 5 USDC</button>
+
+    <div id="status" class="status"></div>
+
+    <div id="resultSection" class="hidden">
+      <div class="row">
+        <span class="label">Tx Hash</span>
+        <span class="value" id="txHash">—</span>
+      </div>
+      <a id="txLink" href="#" target="_blank" rel="noopener">View on ArcScan →</a>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
