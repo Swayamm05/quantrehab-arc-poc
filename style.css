@@ -113,3 +113,112 @@ button:hover:not(:disabled) {
 a {
   color: #38bdf8;
 }
+
+.card.wide {
+  max-width: 480px;
+}
+
+.muted {
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 8px 0 16px;
+}
+
+.section-title {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #38bdf8;
+  font-weight: 700;
+  margin: 20px 0 10px;
+  border-top: 1px solid #334155;
+  padding-top: 16px;
+}
+
+.section-title:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+form label {
+  display: block;
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+form input[type="number"],
+form input[type="text"],
+form select,
+form textarea {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #0f172a;
+  color: #f1f5f9;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+form textarea {
+  resize: vertical;
+}
+
+form input[type="range"] {
+  width: 100%;
+  margin-top: 8px;
+}
+
+form output {
+  display: inline-block;
+  margin-top: 4px;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-bottom: 10px;
+}
+
+.checkbox input {
+  margin-top: 3px;
+}
+
+.assessment-link {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.summary {
+  margin-top: 8px;
+}
+
+.summary .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #334155;
+  font-size: 13px;
+}
+
+.summary .label {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.summary .value {
+  color: #f1f5f9;
+  text-align: right;
+    }
+  
