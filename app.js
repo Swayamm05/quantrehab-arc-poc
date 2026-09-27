@@ -60,6 +60,7 @@ const els = {
   resultSection: document.getElementById("resultSection"),
   txHash: document.getElementById("txHash"),
   txLink: document.getElementById("txLink"),
+  assessmentLink: document.getElementById("assessmentLink"),
 };
 
 let account = null;
@@ -114,8 +115,8 @@ async function connectWallet() {
 // Make sure the wallet is switched to Arc Testnet, adding it if needed.
 async function ensureArcNetwork() {
   const currentChainIdHex = String(
-  await window.ethereum.request({ method: "eth_chainId" })
-);
+    await window.ethereum.request({ method: "eth_chainId" })
+  );
 
   if (currentChainIdHex.toLowerCase() === CONFIG.CHAIN_ID_HEX.toLowerCase()) {
     return;
@@ -215,7 +216,15 @@ async function payNow() {
     setStatus("Payment successful!", "success");
     els.txHash.textContent = hash;
     els.txLink.href = `${CONFIG.EXPLORER_URL}/tx/${hash}`;
+    els.assessmentLink.href = `assessment.html?tx=${hash}`;
     els.resultSection.classList.remove("hidden");
+
+    // Mark payment as verified for this browser tab so assessment.html
+    // knows the person is allowed in. This is a simple client-side gate
+    // suitable for a proof of concept — not a substitute for real
+    // server-side verification in a production build.
+    sessionStorage.setItem("quantrehab_payment_tx", hash);
+    sessionStorage.setItem("quantrehab_payment_verified", "true");
 
     await refreshBalance();
   } catch (err) {
