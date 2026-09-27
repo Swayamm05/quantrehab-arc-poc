@@ -18,8 +18,8 @@ export const CONFIG = {
   CHAIN_ID: 5042002,
   CHAIN_ID_HEX: "0x4CEF52",
   CHAIN_NAME: "Arc Testnet",
-  RPC_URL: "https://rpc.testnet.arc.network",
-  EXPLORER_URL: "https://testnet.arcscan.app",
+  RPC_URL: "https://rpc.testnet.arc.io",
+  EXPLORER_URL: "https://explorer.testnet.arc.io",
 
   // USDC ERC-20 contract on Arc Testnet (6 decimals)
   USDC_ADDRESS: "0x3600000000000000000000000000000000000000",
