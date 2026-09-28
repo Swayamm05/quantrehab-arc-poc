@@ -3,57 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuantRehab — Payment</title>
+  <title>QuantRehab × Arc — Prototype</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="card">
-    <div class="brand">QUANTREHAB</div>
-    <div class="title">Physiotherapy Consultation</div>
-
-    <div class="row">
-      <span class="label">Provider</span>
-      <span class="value" id="providerName">—</span>
-    </div>
-    <div class="row">
-      <span class="label">Service</span>
-      <span class="value" id="serviceName">—</span>
-    </div>
-    <div class="row">
-      <span class="label">Price</span>
-      <span class="value" id="priceValue">—</span>
-    </div>
-    <div class="row">
-      <span class="label">Network</span>
-      <span class="value" id="networkValue">—</span>
-    </div>
-
-    <div id="walletSection" class="hidden">
-      <div class="row">
-        <span class="label">Wallet</span>
-        <span class="value" id="walletAddress">—</span>
-      </div>
-      <div class="row">
-        <span class="label">USDC Balance</span>
-        <span class="value" id="walletBalance">—</span>
-      </div>
-    </div>
-
-    <button id="connectBtn">Connect Wallet</button>
-    <button id="payBtn" class="hidden">Pay 5 USDC</button>
-
-    <div id="status" class="status"></div>
-
-    <div id="resultSection" class="hidden">
-      <div class="row">
-        <span class="label">Tx Hash</span>
-        <span class="value" id="txHash">—</span>
-      </div>
-      <a id="txLink" href="#" target="_blank" rel="noopener">View on ArcScan →</a>
-      <a id="assessmentLink" href="assessment.html" class="assessment-link">Continue to Assessment →</a>
-    </div>
+  <div class="proto-banner">
+    🧪 <strong>Stage 1 prototype</strong> — one narrow slice of QuantRehab. Uses synthetic demo data on Arc Testnet. Not a clinically validated system. <a href="https://github.com/swayamm05/swayamm05.github.io#readme">Full vision →</a>
   </div>
 
+  <div class="card wide">
+
+    <!-- 1. HOME -->
+    <section id="s-home" class="screen">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">Sport-specific MSK intelligence</div>
+      <p class="muted">QuantRehab turns athlete-reported symptoms, sport, training load, technique and recovery into a structured evidence profile, then connects the athlete to an appropriate service. Arc settles the payment in USDC.</p>
+      <div class="mini"><b>Understand</b><span>Structured MSK assessment</span></div>
+      <div class="mini"><b>Reason</b><span>Contributing-factor analysis (research-stage)</span></div>
+      <div class="mini"><b>Act</b><span>Recommended service, paid in USDC on Arc</span></div>
+      <p class="note">Research-stage prototype. Not a clinically validated diagnostic system. Use synthetic data only — do not enter real patient information.</p>
+      <button id="startBtn">Start demo assessment</button>
+      <details>
+        <summary>Where does Arc fit? (privacy architecture)</summary>
+        <div class="split">
+          <div><b>🔒 Off-chain</b><br>symptoms, history, pain scores, self-tests, QRCS / SERI / QRTI data. Never sent anywhere in this demo — it stays in your browser.</div>
+          <div><b>⛓️ Arc</b><br>USDC payment and settlement for the service. Later: provider payments, marketplace, agent-authorized transactions.</div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 2. ASSESSMENT -->
+    <section id="s-assess" class="screen hidden">
+      <form id="form">
+        <div class="brand">STEP 1 · ASSESSMENT</div>
+        <div class="title">Structured MSK evidence</div>
+        <button type="button" id="demoFill" class="secondary">Fill with synthetic demo data</button>
+
+        <div class="section-title">Safety Screen</div>
+        <label class="checkbox"><input type="checkbox" name="flag_trauma" /> Sudden severe pain after a fall, collision, or accident</label>
+        <label class="checkbox"><input type="checkbox" name="flag_night" /> Pain that wakes you at night or doesn't ease with rest</label>
+        <label class="checkbox"><input type="checkbox" name="flag_neuro" /> Numbness, tingling, or weakness that is spreading</label>
+        <label class="checkbox"><input type="checkbox" name="flag_systemic" /> Unexplained fever, chills, or weight loss with the pain</label>
+        <label class="checkbox"><input type="checkbox" name="flag_saddle" /> Loss of bladder/bowel control, or groin numbness</label>
+
+        <div class="section-title">Symptoms</div>
+        <label>Body region
+          <select name="bodyRegion" required><option value="">Select...</option><option>Knee</option><option>Ankle / Foot</option><option>Hip</option><option>Lower back</option><option>Shoulder</option><option>Elbow / Wrist</option><option>Other</option></select>
+        </label>
+        <label>Onset
+          <select name="onset" required><option value="">Select...</option><option>Sudden</option><option>Gradual</option></select>
+        </label>
+        <label>Current pain (0–10)
+          <input type="range" name="painLevel" min="0" max="10" value="3" oninput="this.nextElementSibling.textContent=this.value" /><output>3</output>
+        </label>
+        <label>What makes it worse?<textarea name="aggravating" rows="2"></textarea></label>
+        <label>What makes it better?<textarea name="relieving" rows="2"></textarea></label>
+
+        <div class="section-title">Sport &amp; Load</div>
+        <label>Primary sport
+          <select name="sport" required><option value="">Select...</option><option>Running</option><option>Badminton</option><option>Football</option><option>Cricket</option><option>Basketball</option><option>Gym training</option><option>Other</option></select>
+        </label>
+        <label>Sessions per week<input type="number" name="frequency" min="0" max="14" /></label>
+        <label>Recent change in training load
+          <select name="loadChange"><option value="">Select...</option><option>Increased recently</option><option>Decreased recently</option><option>No real change</option></select>
+        </label>
+        <label>Recent technique/form change? (optional)<textarea name="technique" rows="2"></textarea></label>
+
+        <div class="section-title">Recovery &amp; History</div>
+        <label>Sleep (hours/night)<input type="number" name="sleep" min="0" max="14" step="0.5" /></label>
+        <label>Recovery quality
+          <select name="recovery"><option value="">Select...</option><option>Poor</option><option>Fair</option><option>Good</option></select>
+        </label>
+        <label>Relevant previous injury? (optional)<textarea name="previousInjury" rows="2"></textarea></label>
+
+        <button type="submit">See QuantRehab analysis →</button>
+      </form>
+    </section>
+
+    <!-- Red flag stop -->
+    <section id="s-redflag" class="screen hidden">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">Please see a healthcare professional</div>
+      <p class="muted">One or more answers should be checked by a qualified professional promptly rather than continuing with this self-assessment. This is a safety precaution, not a diagnosis.</p>
+      <button type="button" class="secondary" data-go="home">Back to start</button>
+    </section>
+
+    <!-- 3. INTELLIGENCE -->
+    <section id="s-intel" class="screen hidden">
+      <div class="brand">STEP 2 · QUANTREHAB INTELLIGENCE</div>
+      <div class="title">Evidence profile</div>
+      <div id="evidenceBox"></div>
+      <div class="section-title">Contributing-factor profile</div>
+      <div id="factorBox"></div>
+      <p class="note">Research-stage demo: a transparent rule-based mapping of your answers. No diagnosis and no probabilities are shown — the validated QRCS reasoning layer comes through the research phase.</p>
+      <div class="section-title">Recommended next step</div>
+      <div class="reco" id="recoText"></div>
+      <button id="toServiceBtn">View matched provider →</button>
+    </section>
+
+    <!-- 4. SERVICE + PAYMENT -->
+    <section id="s-pay" class="screen hidden">
+      <div class="brand">STEP 3 · SERVICE &amp; PAYMENT</div>
+      <div class="title">Provider &amp; USDC payment</div>
+      <p class="note">QuantRehab Service Agent (prototype) prepared this payment. It cannot spend anything — you authorize it in your own wallet.</p>
+      <div class="row"><span class="label">Provider</span><span class="value" id="providerName">—</span></div>
+      <div class="row"><span class="label">Service</span><span class="value" id="serviceName">—</span></div>
+      <div class="row"><span class="label">Price</span><span class="value" id="priceValue">—</span></div>
+      <div class="row"><span class="label">Network</span><span class="value" id="networkValue">—</span></div>
+      <p class="muted">Demo provider: a test wallet, not a real clinic.</p>
+      <div id="walletSection" class="hidden">
+        <div class="row"><span class="label">Wallet</span><span class="value" id="walletAddress">—</span></div>
+        <div class="row"><span class="label">USDC Balance</span><span class="value" id="walletBalance">—</span></div>
+      </div>
+      <button id="connectBtn">Connect Wallet</button>
+      <button id="payBtn" class="hidden">Pay 5 USDC</button>
+      <div id="status" class="status"></div>
+    </section>
+
+    <!-- 5. SETTLEMENT + FUTURE -->
+    <section id="s-done" class="screen hidden">
+      <div class="brand">STEP 4 · ARC SETTLEMENT</div>
+      <div class="title">Consultation booked ✓</div>
+      <div class="row"><span class="label">Amount</span><span class="value">5 USDC — confirmed</span></div>
+      <div class="row"><span class="label">Provider</span><span class="value" id="doneProvider">—</span></div>
+      <div class="row"><span class="label">Service</span><span class="value" id="doneService">—</span></div>
+      <div class="row"><span class="label">Tx Hash</span><span class="value" id="txHash">—</span></div>
+      <a id="txLink" href="#" target="_blank" rel="noopener">View on Arc explorer →</a>
+
+      <div class="section-title">What is real today</div>
+      <div class="mini"><b>Working prototype</b><span>Structured intake, USDC payment, on-chain confirmation on Arc Testnet</span></div>
+      <div class="mini"><b>Research-stage</b><span>Evidence → contributing-factor mapping (illustrative, not validated)</span></div>
+      <div class="mini"><b>Future</b><span>QRCS / SERI / QRTI recovery tracking, verified physiotherapist marketplace, agent-authorized payments, API</span></div>
+      <p class="note">Recovery tracking (pain, function, load, readiness, reassessment) is planned after consultation — not built yet.</p>
+      <button type="button" class="secondary" data-go="home">Back to start</button>
+    </section>
+
+  </div>
   <script type="module" src="app.js"></script>
 </body>
-</html>
+                 </html>
+  
