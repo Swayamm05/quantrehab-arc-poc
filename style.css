@@ -114,6 +114,24 @@ a {
   color: #38bdf8;
 }
 
+.proto-banner {
+  max-width: 480px;
+  width: 100%;
+  background: #422006;
+  border: 1px solid #92400e;
+  color: #fde68a;
+  font-size: 12.5px;
+  line-height: 1.5;
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.proto-banner a {
+  color: #fde68a;
+  text-decoration: underline;
+}
+
 .card.wide {
   max-width: 480px;
 }
@@ -220,5 +238,68 @@ form output {
 .summary .value {
   color: #f1f5f9;
   text-align: right;
-    }
+}
+
+.mini {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.mini b {
+  display: block;
+  color: #38bdf8;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.mini span {
+  color: #cbd5e1;
+}
+
+.note {
+  font-size: 12px;
+  color: #fde68a;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+.reco {
+  background: #0f172a;
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+details {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+details summary {
+  cursor: pointer;
+  color: #38bdf8;
+}
+
+.split {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.split div {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 10px 12px;
+  line-height: 1.5;
+  }
   
