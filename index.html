@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="proto-banner">
-    🧪 <strong>Stage 1 prototype</strong> — one narrow slice of QuantRehab. Uses synthetic demo data on Arc Testnet. Not a clinically validated system. <a href="https://github.com/swayamm05/swayamm05.github.io#readme">Full vision →</a>
+    🧪 <strong>Stage 1 prototype</strong> — one narrow slice of QuantRehab. Uses synthetic demo data on Arc Testnet. Not a clinically validated system. <a href="#" id="visionLink">Full vision →</a>
   </div>
 
   <div class="card wide">
@@ -22,7 +22,7 @@
       <div class="mini"><b>Reason</b><span>Contributing-factor analysis (research-stage)</span></div>
       <div class="mini"><b>Act</b><span>Recommended service, paid in USDC on Arc</span></div>
       <p class="note">Research-stage prototype. Not a clinically validated diagnostic system. Use synthetic data only — do not enter real patient information.</p>
-      <button id="startBtn">Start demo assessment</button>
+      <button id="startBtn">Start demo</button>
       <details>
         <summary>Where does Arc fit? (privacy architecture)</summary>
         <div class="split">
@@ -35,7 +35,7 @@
     <!-- 2. ASSESSMENT -->
     <section id="s-assess" class="screen hidden">
       <form id="form">
-        <div class="brand">STEP 1 · ASSESSMENT</div>
+        <div class="brand">STEP 2 · ASSESSMENT</div>
         <div class="title">Structured MSK evidence</div>
         <button type="button" id="demoFill" class="secondary">Fill with synthetic demo data</button>
 
@@ -90,7 +90,7 @@
 
     <!-- 3. INTELLIGENCE -->
     <section id="s-intel" class="screen hidden">
-      <div class="brand">STEP 2 · QUANTREHAB INTELLIGENCE</div>
+      <div class="brand">STEP 3 · QUANTREHAB INTELLIGENCE</div>
       <div class="title">Evidence profile</div>
       <div id="evidenceBox"></div>
       <div class="section-title">Contributing-factor profile</div>
@@ -98,12 +98,12 @@
       <p class="note">Research-stage demo: a transparent rule-based mapping of your answers. No diagnosis and no probabilities are shown — the validated QRCS reasoning layer comes through the research phase.</p>
       <div class="section-title">Recommended next step</div>
       <div class="reco" id="recoText"></div>
-      <button id="toServiceBtn">View matched provider →</button>
+      <button id="nextBtn">What's next →</button>
     </section>
 
     <!-- 4. SERVICE + PAYMENT -->
     <section id="s-pay" class="screen hidden">
-      <div class="brand">STEP 3 · SERVICE &amp; PAYMENT</div>
+      <div class="brand">STEP 1 · SERVICE &amp; PAYMENT</div>
       <div class="title">Provider &amp; USDC payment</div>
       <p class="note">QuantRehab Service Agent (prototype) prepared this payment. It cannot spend anything — you authorize it in your own wallet.</p>
       <div class="row"><span class="label">Provider</span><span class="value" id="providerName">—</span></div>
@@ -120,26 +120,46 @@
       <div id="status" class="status"></div>
     </section>
 
-    <!-- 5. SETTLEMENT + FUTURE -->
+    <!-- TRANSACTION PAGE -->
     <section id="s-done" class="screen hidden">
-      <div class="brand">STEP 4 · ARC SETTLEMENT</div>
-      <div class="title">Consultation booked ✓</div>
-      <div class="row"><span class="label">Amount</span><span class="value">5 USDC — confirmed</span></div>
+      <div class="brand">STEP 1 · ARC SETTLEMENT</div>
+      <div class="title">Payment confirmed ✓</div>
+      <div class="row"><span class="label">Amount</span><span class="value">5 USDC</span></div>
       <div class="row"><span class="label">Provider</span><span class="value" id="doneProvider">—</span></div>
       <div class="row"><span class="label">Service</span><span class="value" id="doneService">—</span></div>
+      <div class="row"><span class="label">Network</span><span class="value">Arc Testnet</span></div>
       <div class="row"><span class="label">Tx Hash</span><span class="value" id="txHash">—</span></div>
       <a id="txLink" href="#" target="_blank" rel="noopener">View on Arc explorer →</a>
+      <button id="toAssessBtn">Continue to assessment →</button>
+    </section>
 
+    <!-- FUTURE -->
+    <section id="s-future" class="screen hidden">
+      <div class="brand">STEP 4 · WHAT'S NEXT</div>
+      <div class="title">Recovery &amp; roadmap</div>
+      <p class="muted">After the consultation, QuantRehab would track pain, function, training load, readiness and reassessment over time. That tracking is planned, not built yet.</p>
       <div class="section-title">What is real today</div>
-      <div class="mini"><b>Working prototype</b><span>Structured intake, USDC payment, on-chain confirmation on Arc Testnet</span></div>
-      <div class="mini"><b>Research-stage</b><span>Evidence → contributing-factor mapping (illustrative, not validated)</span></div>
+      <div class="mini"><b>Working prototype</b><span>USDC payment confirmed on Arc Testnet, then structured intake</span></div>
+      <div class="mini"><b>Research-stage</b><span>Evidence to contributing-factor mapping (illustrative, not validated)</span></div>
       <div class="mini"><b>Future</b><span>QRCS / SERI / QRTI recovery tracking, verified physiotherapist marketplace, agent-authorized payments, API</span></div>
-      <p class="note">Recovery tracking (pain, function, load, readiness, reassessment) is planned after consultation — not built yet.</p>
       <button type="button" class="secondary" data-go="home">Back to start</button>
+    </section>
+
+    <!-- VISION -->
+    <section id="s-vision" class="screen hidden">
+      <div class="brand">QUANTREHAB</div>
+      <div class="title">Full vision</div>
+      <p class="muted">A sport-specific MSK intelligence platform: structured evidence acquisition, then source-traceable probabilistic reasoning, then a route to professional care and longitudinal recovery tracking. This demo is a small slice of it.</p>
+      <div class="mini"><b>Stage 1 · Validation</b><span>Structured assessment, QRCS / SERI / QRTI, physiotherapist agreement study</span></div>
+      <div class="mini"><b>Stage 2 · Distribution</b><span>Athlete app, physiotherapists, academies, clubs, corporate sports programs</span></div>
+      <div class="mini"><b>Stage 3 · Ecosystem</b><span>Provider marketplace, bookings, events, dashboards, API</span></div>
+      <div class="mini"><b>Stage 4 · Economic network</b><span>USDC settlement, agent-authorized purchases, credentials, reputation</span></div>
+      <p class="note">Health data stays off-chain. Arc is the settlement layer. No clinical validation is claimed yet.</p>
+      <button type="button" id="visionBack" class="secondary">← Back</button>
     </section>
 
   </div>
   <script type="module" src="app.js"></script>
 </body>
-                 </html>
-  
+                                  </html>
+      
