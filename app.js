@@ -28,7 +28,10 @@ let walletClient = null;
 let recommendation = CONFIG.SERVICE_NAME;
 
 // ---------- screens ----------
+let current = "home";
+let prev = "home";
 function show(name) {
+  current = name;
   document.querySelectorAll(".screen").forEach((s) => s.classList.add("hidden"));
   $("s-" + name).classList.remove("hidden");
   window.scrollTo(0, 0);
@@ -36,8 +39,15 @@ function show(name) {
 document.querySelectorAll("[data-go]").forEach((b) =>
   b.addEventListener("click", () => show(b.dataset.go))
 );
-$("startBtn").addEventListener("click", () => show("assess"));
-$("toServiceBtn").addEventListener("click", () => show("pay"));
+$("startBtn").addEventListener("click", () => show("pay"));
+$("toAssessBtn").addEventListener("click", () => show("assess"));
+$("nextBtn").addEventListener("click", () => show("future"));
+$("visionLink").addEventListener("click", (e) => {
+  e.preventDefault();
+  prev = current;
+  show("vision");
+});
+$("visionBack").addEventListener("click", () => show(prev));
 
 function addRow(parent, label, value) {
   const r = document.createElement("div");
@@ -199,7 +209,7 @@ $("payBtn").addEventListener("click", async () => {
     if (receipt.status !== "success") throw new Error("Transaction failed on-chain.");
 
     $("doneProvider").textContent = CONFIG.PROVIDER_NAME;
-    $("doneService").textContent = recommendation;
+    $("doneService").textContent = CONFIG.SERVICE_NAME;
     $("txHash").textContent = hash;
     $("txLink").href = `${CONFIG.EXPLORER_URL}/tx/${hash}`;
     show("done");
@@ -210,3 +220,4 @@ $("payBtn").addEventListener("click", async () => {
     $("payBtn").disabled = false;
   }
 });
+                                   
